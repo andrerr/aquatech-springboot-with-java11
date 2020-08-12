@@ -8,9 +8,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.aquatech.aquatech.entities.Categoria;
 import com.aquatech.aquatech.entities.Pedido;
 import com.aquatech.aquatech.entities.Usuario;
 import com.aquatech.aquatech.entities.enums.OrderStatus;
+import com.aquatech.aquatech.repositories.CategoriaRepositories;
 import com.aquatech.aquatech.repositories.PedidoRepositories;
 import com.aquatech.aquatech.repositories.UsuarioRepositories;
 
@@ -23,9 +25,18 @@ public class TesteConfig implements CommandLineRunner {
 	
 	@Autowired
 	private PedidoRepositories pedidoRepositories;
+
+	@Autowired
+	private CategoriaRepositories categoriaRepositories;
 	
 	@Override
 	public void run(String... args) throws Exception {
+		
+		Categoria cat1 = new Categoria(null, "Eletronicos");
+		Categoria cat2 = new Categoria(null, "Livros");
+		Categoria cat3 = new Categoria(null, "Informatica");
+		
+		categoriaRepositories.saveAll(Arrays.asList(cat1, cat2, cat3));
 
 		Usuario u1 = new Usuario(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
 		Usuario u2 = new Usuario(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
