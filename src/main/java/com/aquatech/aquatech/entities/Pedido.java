@@ -11,13 +11,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.aquatech.aquatech.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "tb_pedido")
 public class Pedido implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -28,14 +29,17 @@ public class Pedido implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
+
+	private Integer orderStatus;
 	
 	public Pedido() {}
 
-	public Pedido(Long id, Instant data, Usuario usuario) {
+	public Pedido(Long id, Instant data,  Usuario usuario, OrderStatus orderStatus) {
 		super();
 		this.id = id;
 		this.data = data;
 		this.usuario = usuario;
+		setOrderStatus(orderStatus);
 	}
 
 	public Long getId() {
@@ -60,6 +64,16 @@ public class Pedido implements Serializable{
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	
+	public OrderStatus getOrderStatus() {
+		return OrderStatus.valueOf(orderStatus);
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		if (orderStatus != null) {
+			this.orderStatus = orderStatus.getCode();
+		}
 	}
 
 	@Override
@@ -86,6 +100,4 @@ public class Pedido implements Serializable{
 			return false;
 		return true;
 	};
-	
-	
 }
