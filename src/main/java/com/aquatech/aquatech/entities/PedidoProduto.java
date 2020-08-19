@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.aquatech.aquatech.entities.pk.PedidoProdutoPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_pedido_produto")
@@ -15,11 +16,13 @@ public class PedidoProduto implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@EmbeddedId
-	private PedidoProdutoPK id;
+	private PedidoProdutoPK id = new PedidoProdutoPK();
 	
 	private Integer quantidade;
 	private Double preco;
 	
+	public PedidoProduto() {}
+
 	public PedidoProduto(Pedido pedido, Produto produto, Integer quantidade, Double preco) {
 		super();
 		id.setPedido(pedido);
@@ -28,6 +31,7 @@ public class PedidoProduto implements Serializable{
 		this.preco = preco;
 	}
 	
+	@JsonIgnore
 	public Pedido getPedido() {
 		return id.getPedido();
 	}

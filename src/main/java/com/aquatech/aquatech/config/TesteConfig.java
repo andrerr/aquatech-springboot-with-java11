@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.aquatech.aquatech.entities.Categoria;
 import com.aquatech.aquatech.entities.Pedido;
+import com.aquatech.aquatech.entities.PedidoProduto;
 import com.aquatech.aquatech.entities.Produto;
 import com.aquatech.aquatech.entities.Usuario;
 import com.aquatech.aquatech.entities.enums.OrderStatus;
 import com.aquatech.aquatech.repositories.CategoriaRepositories;
+import com.aquatech.aquatech.repositories.PedidoProdutoRepositories;
 import com.aquatech.aquatech.repositories.PedidoRepositories;
 import com.aquatech.aquatech.repositories.ProdutoRepositories;
 import com.aquatech.aquatech.repositories.UsuarioRepositories;
@@ -33,6 +35,9 @@ public class TesteConfig implements CommandLineRunner {
 
 	@Autowired
 	private ProdutoRepositories produtoRepositories;
+	
+	@Autowired
+	private PedidoProdutoRepositories pedidoProdutoRepositories;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -71,5 +76,11 @@ public class TesteConfig implements CommandLineRunner {
 		
 		pedidoRepositories.saveAll(Arrays.asList(o1, o2, o3));
 		
+		PedidoProduto oi1 = new PedidoProduto(o1, p1, 2, p1.getPreco());
+		PedidoProduto oi2 = new PedidoProduto(o1, p3, 1, p3.getPreco());
+		PedidoProduto oi3 = new PedidoProduto(o2, p3, 2, p3.getPreco());
+		PedidoProduto oi4 = new PedidoProduto(o3, p5, 2, p5.getPreco());
+		
+		pedidoProdutoRepositories.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 	}
 }

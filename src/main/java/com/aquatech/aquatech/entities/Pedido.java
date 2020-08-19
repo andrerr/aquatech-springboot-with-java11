@@ -2,6 +2,8 @@ package com.aquatech.aquatech.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.aquatech.aquatech.entities.enums.OrderStatus;
@@ -31,6 +34,9 @@ public class Pedido implements Serializable{
 	private Usuario usuario;
 
 	private Integer orderStatus;
+	
+	@OneToMany(mappedBy = "id.pedido")
+	private Set<PedidoProduto> produtos = new HashSet<>();
 	
 	public Pedido() {}
 
@@ -74,6 +80,10 @@ public class Pedido implements Serializable{
 		if (orderStatus != null) {
 			this.orderStatus = orderStatus.getCode();
 		}
+	}
+	
+	public Set<PedidoProduto> getProdutos() {
+		return produtos;
 	}
 
 	@Override
